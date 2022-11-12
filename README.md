@@ -1,2 +1,2 @@
 # web-programming-lab-2
-Avg timing: ~45 ms
+Avg waiting response timing: ~45 ms
