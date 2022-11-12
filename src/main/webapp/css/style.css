@@ -1,0 +1,99 @@
+@font-face {
+    font-family: "GOST type B";
+
+}
+
+canvas {
+    border: 1px solid gray;
+}
+
+
+td {
+    text-align: center;
+    vertical-align: top;
+
+}
+td:hover{
+    border-color: red;
+
+
+}
+html {
+    font-family: "GOST type B","Courier New","sans-serif";
+
+}
+.footer{
+    background: gray;
+    font-family: "Courier New";
+}
+
+body{
+    background: linear-gradient(45deg, rgba(103, 0, 31, .8), rgba(34, 101, 163, .5));
+
+
+}
+svg line{
+    stroke: blue;
+    stroke-width: 2;
+}
+
+.graphContainer {
+    background: aliceblue;
+    opacity: 0.6;
+}
+
+.submit {
+
+    background-color: red;
+    color: black;
+    transition-property: background-color,color,border-radius;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+
+}
+.submit:hover{
+    background-color: blue;
+    color:white;
+    border-radius: 10px;
+}
+.param-table{
+    height: 150px;
+
+}
+
+.output-table{
+    width: 100%;
+    height: 500px;
+
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: steelblue;
+}
+
+.wrong_data {
+    background-color: brown;
+    font-weight: bold;
+}
+
+.output-table * {
+    border: 1px solid gray;
+    text-align: center;
+    vertical-align: auto;
+}
+
+.xLeftlimit, .xRightlimit {
+    width: 700px;
+}
+
+.graphContainer > div {
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 265px;
+}
+
+.xLeftlimit {}
+.xRightlimit {}
+.leftLabel {}
+.rightLabel {}
