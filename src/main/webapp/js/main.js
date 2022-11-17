@@ -10,16 +10,20 @@ let rightRange = document.querySelector(".xRightlimit")
 
 
 // все слушатели(почти)
-inputX.addEventListener("change", (elem) => {x_absolute = elem.target.value})
-inputY.addEventListener("change", (elem) => {y_absolute = elem.target.value})
+inputX.addEventListener("input", (elem) => {x_absolute = elem.target.value})
+inputY.addEventListener("input", (elem) => {y_absolute = elem.target.value})
 submit_button.addEventListener("click",submit_data)
-leftRange.addEventListener("input",(e) => {
+leftRange.addEventListener("change",(e) => {
+    console.log(1)
     leftLimit = e.target.value
     document.querySelector(".leftLabel").innerHTML = "Область прорисовки по X:   " + leftLimit
+    instantUpload()
 })
-rightRange.addEventListener("input", (e) => {
+rightRange.addEventListener("change", (e) => {
+    console.log(1)
     rightLimit = e.target.value;
     document.querySelector(".rightLabel").innerHTML = "Область прорисовки X:" + rightLimit
+    instantUpload()
 })
 
 
@@ -169,14 +173,16 @@ setTimeout(() => {
     setInterval(() => {
         x = Number(bigData[0][0])
         y = Number(bigData[0][1])
-        let item = bigData.splice([0],1)
+        bigData.splice([0],1)
         if (y <= (Math.sin(x/120)*20 + 600) && y >= (Math.sin(x/100)*50 + 200) && x >= leftLimit && x <= rightLimit){
             drawPoint(document.getElementById("graph"),x,y,5,5,"blue")
         }  else if (y <= (Math.sin(x/120)*20 + 600) && y >= (Math.sin(x/100)*50 + 200)) {
             drawPoint(document.getElementById("graph"),x,y,5,5,"green")
         }
-    },0.1)
+    },1)
 },3);
+
+
 
 //забираю массив точек из БД
 function checkAndUpload () {
@@ -193,10 +199,23 @@ function checkAndUpload () {
                 })
         }
         checkAndUpload();
-    },10)
+    },100)
 }
 checkAndUpload();
 graph(document.getElementById("graph"))
 
 
 
+function instantUpload() {
+    if (bigData.length === 0){
+        fetch("check-servlet" + "?leftLimit=" + leftLimit + "&rightLimit=" + rightLimit + "&request_type=checkLimits")
+            .then(response => response.text())
+            .then(responseJson => {
+                let arr = JSON.parse(responseJson)
+                for (str of arr) {
+                    bigData.push(str)
+
+                }
+            })
+    }
+}

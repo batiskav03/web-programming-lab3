@@ -7,13 +7,12 @@ import java.util.ArrayList;
 
 public class DataBaseController {
     private static String PASSWORD = "3361";
-    private static String USER = "postgres";
-    private static String URL = "jdbc:postgresql://localhost:5432/dots_php";
+    private static String USER = "root";
+    private static String URL = "jdbc:mariadb://localhost:3306/public";
 
 
 
     public String getDots(int count,int leftLimit,int rightLimit) {
-
         ArrayList<int[]> list = new ArrayList<>();
         try {
             Class.forName("org.postgresql.Driver");
@@ -22,7 +21,7 @@ public class DataBaseController {
         }
         String SQLcommand = "SELECT * FROM dots \n" +
                 "            WHERE y <= sin(x/120)*20 + 600 AND y >= sin(x/100)*50 + 200 AND x >= " + leftLimit + " AND x <= " + rightLimit + "\n" +
-                "            LIMIT 100 OFFSET " + count*100;
+                "            LIMIT 1000 OFFSET " + count*1000;
 
         try {
             Connection con = DriverManager.getConnection(URL,USER,PASSWORD);
