@@ -151,6 +151,22 @@ function drawPoint(canvas,x,y,weight,height,color) {
 let bigData = [] // массив со всеми точками из БД
 
 
+// Создаем WebSocket соединение для передачи точек
+let socket = new WebSocket("ws://localhost:8080/demo-1.0-SNAPSHOT/trade")
+
+socket.onclose = function () {
+    console.log("Соединение разорвано")
+}
+socket.onopen = function () {
+    console.log("Соединение успешно перешло на протокол WebSocket")
+}
+socket.onmessage = function (event) {
+    console.log("Точки пришли!")
+    let arr = JSON.parse(event.data)
+    for (str of arr) {
+        bigData.push(str)
+    }
+}
 
 // вычисление минимального и максимального значения функции (extremum's)
 function graphExt() {
@@ -185,37 +201,29 @@ setTimeout(() => {
 
 
 //забираю массив точек из БД
-function checkAndUpload () {
+setTimeout(function checkAndUpload () {
     setTimeout( () => {
         if (bigData.length === 0){
-            fetch("check-servlet" + "?leftLimit=" + leftLimit + "&rightLimit=" + rightLimit + "&request_type=checkLimits")
-                .then(response => response.text())
-                .then(responseJson => {
-                    let arr = JSON.parse(responseJson)
-                    for (str of arr) {
-                        bigData.push(str)
-
-                    }
-                })
+            // fetch("check-servlet" + "?leftLimit=" + leftLimit + "&rightLimit=" + rightLimit + "&request_type=checkLimits")
+            //     .then(response => response.text())
+            //     .then(responseJson => {
+            //         let arr = JSON.parse(responseJson)
+            //         for (str of arr) {
+            //             bigData.push(str)
+            //
+            //         }
+            //     })
+            socket.send(`${leftLimit};${rightLimit}`)
         }
         checkAndUpload();
     },100)
-}
-checkAndUpload();
+},1000)
+
+
 graph(document.getElementById("graph"))
 
 
 
 function instantUpload() {
-    if (bigData.length === 0){
-        fetch("check-servlet" + "?leftLimit=" + leftLimit + "&rightLimit=" + rightLimit + "&request_type=checkLimits")
-            .then(response => response.text())
-            .then(responseJson => {
-                let arr = JSON.parse(responseJson)
-                for (str of arr) {
-                    bigData.push(str)
-
-                }
-            })
-    }
+    socket.send(`${leftLimit};${rightLimit}`)
 }

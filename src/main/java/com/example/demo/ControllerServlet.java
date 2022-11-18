@@ -7,12 +7,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 @WebServlet(name="ControllerServlet",value="/check-servlet")
 public class ControllerServlet extends HttpServlet {
+
 
     public void init() {
 
@@ -31,10 +31,7 @@ public class ControllerServlet extends HttpServlet {
 
 
         switch (requestType) {
-            case "checkLimits":
-                dispatcher = context.getRequestDispatcher("/trade-servlet");
-                dispatcher.forward(request, response);
-                break;
+
             case "get_from_DB":
 
             case "write_into_DB":

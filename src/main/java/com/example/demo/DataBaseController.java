@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.sql.*;
 import java.util.ArrayList;
 
+
 public class DataBaseController {
     private static String PASSWORD = "3361";
     private static String USER = "root";
@@ -21,7 +22,7 @@ public class DataBaseController {
         }
         String SQLcommand = "SELECT * FROM dots \n" +
                 "            WHERE y <= sin(x/120)*20 + 600 AND y >= sin(x/100)*50 + 200 AND x >= " + leftLimit + " AND x <= " + rightLimit + "\n" +
-                "            LIMIT 1000 OFFSET " + count*1000;
+                "            LIMIT 250 OFFSET " + count*250;
 
         try {
             Connection con = DriverManager.getConnection(URL,USER,PASSWORD);
