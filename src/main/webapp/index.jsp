@@ -1,3 +1,5 @@
+<%@ page import="com.example.demo.Dot" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +65,17 @@
     </tr>
     <tr>
         <td colspan="3" height="250">
-            <table class="output-table">Последние результаты:</table>
+            <table class='output-table'>Последние результаты:
+                <tr>
+                    <th>x</th>
+                    <th>y</th>
+                    <th>Дата</th>
+                   <th>Статус</th>
+                </tr>
+                <jsp:useBean id="outputTable" class="beans.DotTable" scope="session"/>
+
+                <jsp:getProperty  name="outputTable" property="list"/>
+            </table>
         </td>
     </tr>
 </table>

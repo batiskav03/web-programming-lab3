@@ -5,11 +5,21 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import beans.DotTable;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "AreaServlet", value = "/area-servlet")
 public class AreaServlet extends HttpServlet {
+
+    private final String PROLOGUE = "<table id='output-table'></table>\n" +
+            "            <tr>\n" +
+            "                <th>x</th>\n" +
+            "                <th>y</th>\n" +
+            "                <th>Дата</th>\n" +
+            "                <th>Статус</th>\n" +
+            "            </tr>\"";
+
     @Override
     public void init() {}
 
@@ -17,29 +27,15 @@ public class AreaServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         double x = Double.parseDouble(request.getParameter("x_absolute"));
         double y = Double.parseDouble(request.getParameter("y_absolute"));
+
         HttpSession session = request.getSession();
-
-        List<String> rows = (List) session.getAttribute("rows");
-
-        if (rows == null) {
-            rows = new ArrayList<>();
-            session.setAttribute("rows", rows);
-            rows.add("<table id='output-table'></table>\n" +
-                    "            <tr>\n" +
-                    "                <th>x</th>\n" +
-                    "                <th>y</th>\n" +
-                    "                <th>Дата</th>\n" +
-                    "                <th>Статус</th>\n" +
-                    "            </tr>\"");
-        }
-
-        rows.add(new Dot(x,y,validate(x,y)).toString());
+        DotTable table = (DotTable) session.getAttribute("outputTable");
+        table.addDot(new Dot(x,y,validate(x,y)));
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        for (String row: rows) {
-            out.println(row);
-        }
+        out.println(PROLOGUE + table.getList());
+
     }
 
     @Override
