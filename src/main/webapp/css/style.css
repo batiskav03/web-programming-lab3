@@ -61,10 +61,15 @@ svg line{
 
 }
 
-.output-table{
+.output-table {
     width: 100%;
     height: 500px;
 
+}
+.output-table td:hover {
+    box-shadow: 0 0 5px black;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
 }
 
 .axis path, .axis line {

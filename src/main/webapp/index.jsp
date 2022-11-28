@@ -1,5 +1,4 @@
-<%@ page import="com.example.demo.Dot" %>
-<%@ page import="java.util.ArrayList" %>
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,13 +21,13 @@
         <td id="graphicContainer" class="graphContainer">
             <canvas id="graph"></canvas>
             <p>
-                <input class="xLeftlimit" type="range" min="0" max="1400" value="300" >
+                <input class="xLeftlimit" type="range" min="0" max="1400" value="0" >
             </p>
             <div>
                 <label class="leftLabel">Область прорисовки по X (все что левее - не прорисовываеться):</label>
             </div>
             <p>
-                <input class="xRightlimit" type="range" min="0" max="1400" value="600" >
+                <input class="xRightlimit" type="range" min="0" max="1400" value="1400" >
             </p>
             <div>
                 <label class="rightLabel">Область прорисовки по X (все что правее - не прорисовываеться):</label>

@@ -1,6 +1,6 @@
 let x_absolute,y_absolute
-let leftLimit = 300
-let rightLimit = 600
+let leftLimit = 0
+let rightLimit = 1400
 let x
 let inputX = document.querySelector(".xnumber")
 let inputY = document.querySelector(".ynumber")
@@ -14,13 +14,12 @@ inputX.addEventListener("input", (elem) => {x_absolute = elem.target.value})
 inputY.addEventListener("input", (elem) => {y_absolute = elem.target.value})
 submit_button.addEventListener("click",submit_data)
 leftRange.addEventListener("change",(e) => {
-    console.log(1)
     leftLimit = e.target.value
     document.querySelector(".leftLabel").innerHTML = "Область прорисовки по X:   " + leftLimit
     instantUpload()
 })
 rightRange.addEventListener("change", (e) => {
-    console.log(1)
+
     rightLimit = e.target.value;
     document.querySelector(".rightLabel").innerHTML = "Область прорисовки X:" + rightLimit
     instantUpload()
@@ -30,16 +29,26 @@ rightRange.addEventListener("change", (e) => {
 
 
 // отправка данных на сервер
-function submit_data (){
-    if (validate_data()) {
-        fetch("check-servlet?" + "x_absolute=" + x_absolute + "&y_absolute=" + y_absolute + "&request_type=get_from_DB")
+function submit_data (x = x_absolute,y = y_absolute){
+    if (arguments[2]) {
+    let rect = arguments[2].getBoundingClientRect();
+    y =  (HEIGHT - (y - rect.top)) * 2 - PADDING;
+    x = (x - rect.left) * 2;
+
+    } else {
+        x = x_absolute;
+    }
+    if (validate_data(x,y)) {
+        fetch("check-servlet?" + "x_absolute=" + x + "&y_absolute=" + y + "&request_type=get_from_DB")
             .then(response => response.text())
             .then(responseText => {
                 document.querySelector(".output-table").innerHTML = responseText
-                if (y <= (Math.sin(x/120)*20 + 600) && y >= (Math.sin(x/100)*50 + 200)) {
-                    drawPoint(document.getElementById("graph"), x_absolute, y_absolute,10,10, "red")
+                if (arguments[2]) {
+                    drawPoint(document.getElementById("graph"), x, y,10,10, "red")
+                } else if (y <= (Math.sin(x/120)*20 + 600) && y >= (Math.sin(x/100)*50 + 200)) {
+                    drawPoint(document.getElementById("graph"), x, y,10,10, "red")
                 }
-                // fetch("check-servlet?" + "x_absolute=" + x_absolute + "&y_absolute=" + y_absolute + "&request_type=write_into_DB")
+                fetch("check-servlet?" + "x_absolute=" + x + "&y_absolute=" + y + "&request_type=write_into_DB")
             })
     } else {
         document.querySelector(".wrong_data").innerHTML = "Данные введены некоректно"
@@ -48,14 +57,8 @@ function submit_data (){
 }
 
 // проверка правильности введенных данных:
-//      - на случай если человек решил удалить кнопки, и не кликнул на одну из них - страница перезагружаеться
-function validate_data(){
-    if (!x_absolute  || !y_absolute){
-        location.reload()
-    }
-    else {
-        return ($.isNumeric(x_absolute) && $.isNumeric(y_absolute))
-    }
+function validate_data(x,y){
+    return ($.isNumeric(x) && $.isNumeric(y))
 }
 
 
@@ -88,15 +91,18 @@ function graph(canvas) {
     canvas.style.height = HEIGHT + "px"
     canvas.width = DPI_WIDTH
     canvas.height = DPI_HEIGHT
-    function mousemove({clientX,clientY}) {
 
 
+    canvas.addEventListener('click', createDot);
+
+    function createDot(event) {
+        submit_data(event.x, event.y, canvas)
     }
-    canvas.addEventListener('mousemove', mousemove)
 
     // линии по y
-        ctx.beginPath()
+    ctx.beginPath()
     ctx.strokeStyle = "#bbb"
+
     // отрисока "сеточки"
     ctx.font = "normal 20px GOST type B"
     ctx.fillStyle = "#96a2aa"
@@ -161,7 +167,6 @@ socket.onopen = function () {
     console.log("Соединение успешно перешло на протокол WebSocket")
 }
 socket.onmessage = function (event) {
-    console.log("Точки пришли!")
     let arr = JSON.parse(event.data)
     for (str of arr) {
         bigData.push(str)
@@ -195,7 +200,7 @@ setTimeout(() => {
         }  else if (y <= (Math.sin(x/120)*20 + 600) && y >= (Math.sin(x/100)*50 + 200)) {
             drawPoint(document.getElementById("graph"),x,y,5,5,"green")
         }
-    },1)
+    },0.1)
 },3);
 
 
@@ -204,15 +209,6 @@ setTimeout(() => {
 setTimeout(function checkAndUpload () {
     setTimeout( () => {
         if (bigData.length === 0){
-            // fetch("check-servlet" + "?leftLimit=" + leftLimit + "&rightLimit=" + rightLimit + "&request_type=checkLimits")
-            //     .then(response => response.text())
-            //     .then(responseJson => {
-            //         let arr = JSON.parse(responseJson)
-            //         for (str of arr) {
-            //             bigData.push(str)
-            //
-            //         }
-            //     })
             socket.send(`${leftLimit};${rightLimit}`)
         }
         checkAndUpload();
@@ -224,6 +220,6 @@ graph(document.getElementById("graph"))
 
 
 
-function instantUpload() {
-    socket.send(`${leftLimit};${rightLimit}`)
-}
+// function instantUpload() {
+//     socket.send(`${leftLimit};${rightLimit}`)
+// }

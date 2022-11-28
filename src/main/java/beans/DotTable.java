@@ -26,7 +26,7 @@ public class DotTable implements Serializable {
     }
 
     public void addDot(Dot dot) {
-        this.list.add(dot);
+        this.list.add(0, dot);
     }
 
 }

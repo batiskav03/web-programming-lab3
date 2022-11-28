@@ -31,9 +31,10 @@ public class ControllerServlet extends HttpServlet {
 
 
         switch (requestType) {
+            case "":
+
 
             case "get_from_DB":
-
             case "write_into_DB":
                 dispatcher = context.getRequestDispatcher("/area-servlet");
                 dispatcher.forward(request, response);
