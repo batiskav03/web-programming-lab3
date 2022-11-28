@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name="ControllerServlet",value="/check-servlet")
+@WebServlet(name="ControllerServlet", urlPatterns = {"/","/check-servlet"})
 public class ControllerServlet extends HttpServlet {
 
 
@@ -31,12 +31,12 @@ public class ControllerServlet extends HttpServlet {
 
 
         switch (requestType) {
-            case "":
-
-
             case "get_from_DB":
-            case "write_into_DB":
                 dispatcher = context.getRequestDispatcher("/area-servlet");
+                dispatcher.forward(request, response);
+                break;
+            case "write_into_DB":
+                dispatcher = context.getRequestDispatcher("/write_db");
                 dispatcher.forward(request, response);
                 break;
             default:

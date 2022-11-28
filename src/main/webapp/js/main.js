@@ -33,7 +33,7 @@ function submit_data (x = x_absolute,y = y_absolute){
     if (arguments[2]) {
     let rect = arguments[2].getBoundingClientRect();
     y =  (HEIGHT - (y - rect.top)) * 2 - PADDING;
-    x = (x - rect.left) * 2;
+    x = parseInt((x - rect.left) * 2,10);
 
     } else {
         x = x_absolute;
@@ -200,7 +200,7 @@ setTimeout(() => {
         }  else if (y <= (Math.sin(x/120)*20 + 600) && y >= (Math.sin(x/100)*50 + 200)) {
             drawPoint(document.getElementById("graph"),x,y,5,5,"green")
         }
-    },0.1)
+    },1)
 },3);
 
 
@@ -220,6 +220,6 @@ graph(document.getElementById("graph"))
 
 
 
-// function instantUpload() {
-//     socket.send(`${leftLimit};${rightLimit}`)
-// }
+function instantUpload() {
+    socket.send(`${leftLimit};${rightLimit}`)
+}

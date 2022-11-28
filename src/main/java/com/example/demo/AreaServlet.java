@@ -28,22 +28,17 @@ public class AreaServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String param = request.getParameter("request_type");
         double x = Double.parseDouble(request.getParameter("x_absolute"));
         double y = Double.parseDouble(request.getParameter("y_absolute"));
 
-        if (param.equals("write_into_DB")) {
-            db.insertDot(x,y);
-        } else if (param.equals("get_from_DB")) {
-            HttpSession session = request.getSession();
-            DotTable table = (DotTable) session.getAttribute("outputTable");
-            table.addDot(new Dot(x,y,validate(x,y)));
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println(PROLOGUE + table.getList());
+        HttpSession session = request.getSession();
 
+        DotTable table = (DotTable) session.getAttribute("outputTable");
+        table.addDot(new Dot(x,y,validate(x,y)));
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println(PROLOGUE + table.getList());
 
-        }
     }
 
     @Override
