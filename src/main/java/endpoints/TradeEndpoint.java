@@ -1,6 +1,6 @@
 package endpoints;
 
-import com.example.demo.DataBaseController;
+import com.example.servlets.DataBaseController;
 import jakarta.websocket.OnMessage;
 import jakarta.websocket.OnOpen;
 import jakarta.websocket.Session;

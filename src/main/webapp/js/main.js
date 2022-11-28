@@ -158,7 +158,7 @@ let bigData = [] // массив со всеми точками из БД
 
 
 // Создаем WebSocket соединение для передачи точек
-let socket = new WebSocket("ws://localhost:8080/demo-1.0-SNAPSHOT/trade")
+let socket = new WebSocket("ws://localhost:8080/servlets-1.0/trade")
 
 socket.onclose = function () {
     console.log("Соединение разорвано")

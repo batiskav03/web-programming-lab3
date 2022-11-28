@@ -1,9 +1,7 @@
-package com.example.demo;
+package com.example.servlets;
 
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import beans.DotTable;
 import jakarta.servlet.http.*;

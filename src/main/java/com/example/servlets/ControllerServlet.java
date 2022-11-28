@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;

@@ -1,6 +1,6 @@
 package beans;
 
-import com.example.demo.Dot;
+import com.example.servlets.Dot;
 
 import java.io.Serializable;
 import java.util.ArrayList;

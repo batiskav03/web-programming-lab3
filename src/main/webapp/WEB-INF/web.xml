@@ -5,7 +5,7 @@
          version="5.0">
     <servlet>
         <servlet-name>ControllerServlet</servlet-name>
-        <servlet-class>com.example.demo.ControllerServlet</servlet-class>
+        <servlet-class>com.example.servlets.ControllerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ControllerServlet</servlet-name>
