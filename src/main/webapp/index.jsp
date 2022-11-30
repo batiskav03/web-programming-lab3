@@ -79,6 +79,6 @@
     </tr>
 </table>
 <script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
-<script  src="js/main.js"></script>
+<script src="js/output/main.js"></script>
 </body>
 </html>
