@@ -35,4 +35,5 @@ function arrayValueOnSegment(myFunc, from, to, argumentMod = 1, accuracy = 0.1) 
 module.exports = {
     makeMathFunc: makeMathFunc,
     arrayValueOnSegment: arrayValueOnSegment,
+    currentFuncValue: currentFuncValue
 }

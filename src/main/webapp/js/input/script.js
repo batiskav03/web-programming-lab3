@@ -1,6 +1,8 @@
 // import modules
 let funcMath = require("./mathFunction")
 let canvasDraw = require("./canvas")
+const {currentFuncValue} = require("./mathFunction");
+
 //all variables
 let x_absolute,y_absolute
 let leftLimit = 0
@@ -11,6 +13,8 @@ let inputY = document.querySelector(".ynumber")
 let submit_button = document.querySelector(".submit")
 let leftRange = document.querySelector(".xLeftlimit")
 let rightRange = document.querySelector(".xRightlimit")
+const lowerFunc = funcMath.makeMathFunc((x) => Math.sin(x)*50 + 200)
+const higherFunc =  funcMath.makeMathFunc((x) => Math.sin(x)*20 + 600)
 
 // create client endpoint
 let socket = new WebSocket("ws://localhost:8080/servlets-1.0/trade")
@@ -76,25 +80,49 @@ function validate_data(x,y){
 
 
 // прорисовывание пользовательских точек
-setTimeout(() => {
+function startAutoProcessing(dotsArray, higherFunc ,lowerFunc) {
     setInterval(() => {
-        x = Number(bigData[0][0])
-        y = Number(bigData[0][1])
-        bigData.splice([0],1)
-        if (y <= (Math.sin(x/120)*20 + 600) && y >= (Math.sin(x/100)*50 + 200) && x >= leftLimit && x <= rightLimit){
-            canvasDraw.drawPoint(document.getElementById("graph"),x,y,5,5,"blue")
-        }  else if (y <= (Math.sin(x/120)*20 + 600) && y >= (Math.sin(x/100)*50 + 200)) {
-            canvasDraw.drawPoint(document.getElementById("graph"),x,y,5,5,"green")
-        }
-    },1)
-},3);
+        try {
+            x = Number(bigData[0][0])
+            y = Number(bigData[0][1])
+            bigData.splice([0], 1)
+            if (y <= currentFuncValue(higherFunc, x, 1 / 120) &&
+                y >= currentFuncValue(lowerFunc, x, 1 / 100) &&
+                x >= leftLimit && x <= rightLimit) {
+                canvasDraw.drawPoint(document.getElementById("graph"), x, y, 5, 5, "blue")
+            } else if (y <= currentFuncValue(higherFunc, x, 1 / 120) &&
+                y >= currentFuncValue(lowerFunc, x, 1 / 100)) {
+                canvasDraw.drawPoint(document.getElementById("graph"), x, y, 5, 5, "green")
+            }
+        } catch (e) {}
+    },5)
+}
+
 
 //забираю массив точек из БД
-setTimeout(function checkAndUpload () {
-    setTimeout( () => {
-        if (bigData.length === 0){
-            socket.send(`${leftLimit};${rightLimit}`)
-        }
-        checkAndUpload();
+(function checkAndUpload() {
+    let time = new Date().getTime()
+    let interval = setInterval( () => {
+        new Promise((resolve) => {
+            if (bigData.length === 0) {
+                socket.send(`${leftLimit};${rightLimit}`)
+            } else {
+                return resolve("")
+            }
+        }).catch((err) => {
+            throw new Error(err)
+        }).then(() => {
+            time = new Date().getTime()
+        })
     },100)
-},1000)
+
+    setInterval( () => {
+        if (new Date().getTime() - time >  3000) {
+            clearInterval(interval)
+            throw new Error("Server timed out, please refresh your page")
+        }
+    },5000)
+
+    startAutoProcessing(bigData, higherFunc, lowerFunc)
+})()
+
