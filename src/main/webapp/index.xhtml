@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+
+
+<h:head name="head">
+    <h:outputStylesheet name="css/stylesheet.css"/>
+
+    <title>Основная страница</title>
+</h:head>
+
+
+    <h:body>
+
+
+    <div class="header">
+        <div>
+        Калабухов Максим Александрович
+        <p>P32131</p>
+        <p>Вариант 1212 (custom)</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="graphicContainer">
+            <canvas id="graph"></canvas>
+            <p>
+                <input class="xLeftlimit" type="range" min="0" max="1400" value="0" />
+            </p>
+            <div>
+                <label class="leftLabel">Область прорисовки по X (все что левее - не прорисовываеться):</label>
+            </div>
+            <p>
+                <input class="xRightlimit" type="range" min="0" max="1400" value="1400" />
+            </p>
+            <div>
+                <label class="rightLabel">Область прорисовки по X (все что правее - не прорисовываеться):</label>
+            </div>
+        </div>
+    </div>
+    <h:form class = "input_data">
+    <div class="io-block">
+        <div>
+            Выберите координату X:
+        </div>
+        <p>
+            <h:inputText type="text" class="xnumber" id="x"/>
+        </p>
+        <div>
+            Выберите координату Y:
+            <p>
+                <h:inputText type="text" class="ynumber" id="y"/>
+            </p>
+        </div>
+        <h:inputText type="button" value="submit" class="submit"/>
+
+        <button class="dotsButton" value="1">stop uploading</button>
+        </div>
+    </h:form>
+    <div class="wrong_data">
+
+    </div>
+
+
+
+    <div class="clearer">
+
+    </div>
+
+
+
+
+
+    <div>
+        <div class="footer-block">
+        <table class='output-table'>Последние результаты:
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+                <th>Дата</th>
+                <th>Статус</th>
+    <!--            <jsp:useBean id="outputTable" class="beans.DotTable" scope="session"/>-->
+
+    <!--            <jsp:getProperty  name="outputTable" property="list"/>-->
+            </tr>
+        </table>
+        </div>
+    </div>
+
+
+        <script src="jakarta.faces.resource/js/output/main.js.xhtml" />
+    </h:body>
+
+</html>

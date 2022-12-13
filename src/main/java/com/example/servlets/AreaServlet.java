@@ -13,8 +13,8 @@ public class AreaServlet extends HttpServlet {
 
     private final String PROLOGUE = "<table id='output-table'></table>\n" +
             "            <tr>\n" +
-            "                <th>x</th>\n" +
-            "                <th>y</th>\n" +
+            "                <th>X</th>\n" +
+            "                <th>Y</th>\n" +
             "                <th>Дата</th>\n" +
             "                <th>Статус</th>\n" +
             "            </tr>\"";

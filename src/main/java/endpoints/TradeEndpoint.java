@@ -1,5 +1,6 @@
 package endpoints;
 
+
 import com.example.servlets.DataBaseController;
 import jakarta.websocket.OnMessage;
 import jakarta.websocket.OnOpen;
@@ -22,7 +23,7 @@ public class TradeEndpoint {
         this.session = session;
         this.countEntries = 1;
         this.db = new DataBaseController();
-
+        System.out.println("new User");
     }
 
 

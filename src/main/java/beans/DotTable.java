@@ -1,11 +1,16 @@
 package beans;
 
 import com.example.servlets.Dot;
+import jakarta.annotation.ManagedBean;
+import jakarta.enterprise.context.SessionScoped;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@ManagedBean
+@SessionScoped
 public class DotTable implements Serializable {
     private List<Dot> list = new ArrayList<>();
 

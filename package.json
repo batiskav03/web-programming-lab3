@@ -4,8 +4,9 @@
   "description": "Web-application",
   "main": "main.js",
   "scripts": {
-    "build-js": "browserify src/main/webapp/js/input/script.js > src/main/webapp/js/output/main.js",
-    "watch-js": "watchify src/main/webapp/js/input/script.js -o src/main/webapp/js/output/main.js"
+    "build-js": "browserify src/main/webapp/resources/js/input/script.js > src/main/webapp/js/output/main.js",
+    "watch-js": "watchify src/main/webapp/resources/js/input/script.js -o src/main/webapp/js/output/main.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,12 @@
     "amqplib": "^0.10.3",
     "browserify": "^17.0.0",
     "jest": "^29.3.1",
-    "watchify": "^4.0.0"
+    "watchify": "^4.0.0",
+    "ws": "^8.11.0"
+  },
+  "jest": {
+    "roots": [
+      "./src/main/webapp/js/tests"
+    ]
   }
 }
