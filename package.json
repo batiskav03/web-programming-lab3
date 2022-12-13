@@ -4,8 +4,8 @@
   "description": "Web-application",
   "main": "main.js",
   "scripts": {
-    "build-js": "browserify src/main/webapp/resources/js/input/script.js > src/main/webapp/js/output/main.js",
-    "watch-js": "watchify src/main/webapp/resources/js/input/script.js -o src/main/webapp/js/output/main.js",
+    "build-js": "browserify src/main/webapp/resources/js/input/script.js > src/main/webapp/resources/js/output/main.js",
+    "watch-js": "watchify src/main/webapp/resources/js/input/script.js -o src/main/webapp/resources/js/output/main.js",
     "test": "jest"
   },
   "repository": {
@@ -36,5 +36,6 @@
     "roots": [
       "./src/main/webapp/js/tests"
     ]
-  }
+  },
+  "devDependencies": {}
 }
