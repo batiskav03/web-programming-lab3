@@ -17,10 +17,11 @@ body {
     justify-content: space-between;
     align-content: space-around;
     background-color: #4D5057;
-    margin: auto auto;
+    margin: 10px;
     width: 100%;
     display: -webkit-flex;
     display: flex;
+
 
     border-radius: 10px;
 
@@ -83,7 +84,7 @@ body {
 }
 
 .io-block {
-
+    margin: 0 auto;
 }
 
 .submit {
@@ -170,6 +171,26 @@ body {
 .wrong-container {
     height: 100px;
     align-content: space-around;
+}
+
+.start_link {
+    margin: auto auto;
+}
+
+.div_link{
+    text-align: center;
+}
+
+.clock-container {
+    margin-top: 200px;
+
+}
+.container-of-container {
+    margin: auto auto;
+}
+
+.hidden{
+    visibility: hidden;
 }
 
 

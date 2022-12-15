@@ -1,4 +1,4 @@
-package com.example.servlets;
+package beans;
 
 
 import jakarta.enterprise.context.SessionScoped;

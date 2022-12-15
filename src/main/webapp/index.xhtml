@@ -21,90 +21,27 @@
 </h:head>
 
 
-    <h:body>
+<h:body>
 
 
     <div class="header">
         <div>
-        Калабухов Максим Александрович
-        <p>P32131</p>
-        <p>Вариант 1212 (custom)</p>
+            Калабухов Максим Александрович
+            <p>P32131</p>
+            <p>Вариант 1212 (custom)</p>
         </div>
     </div>
-    <div class="container">
-        <div class="graphicContainer">
-            <canvas id="graph"></canvas>
-            <p>
-                <input class="xLeftlimit" type="range" min="0" max="1400" value="0" />
-            </p>
-            <div>
-                <label class="leftLabel">Область прорисовки по X (все что левее - не прорисовываеться):</label>
-            </div>
-            <p>
-                <input class="xRightlimit" type="range" min="0" max="1400" value="1400" />
-            </p>
-            <div>
-                <label class="rightLabel">Область прорисовки по X (все что правее - не прорисовываеться):</label>
+    <div class="div_link">
+    <h:link styleClass="start_link" outcome="main" value="На главную страницу"/>
+        <div class="container-of-container">
+            <div class="clock-container">
+
             </div>
         </div>
     </div>
-    <h:form class = "input_data">
-    <div class="io-block">
-        <div>
-            Выберите координату X:
-        </div>
-        <p>
-            <h:inputText type="text" class="xnumber" id="x" value="#{requestBean.x}"/>
-        </p>
-        <div>
-            Выберите координату Y:
-            <p>
-                <h:inputText type="text" class="ynumber" id="y" value="#{requestBean.y}"/>
-            </p>
-        </div>
-        <h:commandButton value="submit" class="submit">
-            <f:ajax execute="@form" listener="#{requestBean.getDotTableRequest}" render="table"/>
-        </h:commandButton>
-
-        <button class="dotsButton" value="1">stop uploading</button>
-        </div>
-    </h:form>
-    <div class="wrong_data">
-
-    </div>
 
 
-
-    <div class="clearer">
-
-    </div>
-
-
-
-    <div class="footer-block">
-        <h:dataTable styleClass="output-table" value="#{dotTable.list}" var="data" id="table" >
-            <h:column headerClass="thStyle">
-                <f:facet name="header">X</f:facet>
-                <h:outputText value="#{data.x}" styleClass="x-result"/>
-            </h:column>
-            <h:column headerClass="thStyle">
-                <f:facet name="header">Y</f:facet>
-                <h:outputText value="#{data.y}" styleClass="y-result"/>
-            </h:column>
-
-            <h:column headerClass="thStyle">
-                <f:facet name="header">Результат</f:facet>
-                <h:outputText value="#{data.result}" styleClass="hitResult"/>
-            </h:column>
-            <h:column headerClass="thStyle">
-                <f:facet name="header">Дата</f:facet>
-                <h:outputText value="#{data.date}"/>
-            </h:column>
-        </h:dataTable>
-    </div>
-
-
-        <script src="jakarta.faces.resource/js/output/main.js.xhtml" />
-    </h:body>
+    <script src="jakarta.faces.resource/js/input/clock.js.xhtml" />
+</h:body>
 
 </html>

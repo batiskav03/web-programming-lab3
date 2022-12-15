@@ -1,6 +1,5 @@
 package beans;
 
-import com.example.servlets.Dot;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -29,11 +28,9 @@ public class RequestManagerBean implements Serializable {
         return y;
     }
     public void setX(int x) {
-        System.out.println("prti");
         this.x = x;
     }
     public void setY(int y){
-        System.out.println("prtiasdasd");
         this.y = y;
     }
     public List<Dot> getDotTable() {
@@ -41,7 +38,6 @@ public class RequestManagerBean implements Serializable {
         return dotTable.getList();
     }
     public List<Dot> getDotTableRequest() {
-
         dotTable.addDot(new Dot(x,y,validate(x,y)));
         return dotTable.getList();
     }

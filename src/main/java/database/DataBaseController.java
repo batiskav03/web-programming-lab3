@@ -1,4 +1,4 @@
-package com.example.servlets;
+package database;
 
 import com.google.gson.Gson;
 
@@ -44,7 +44,7 @@ public class DataBaseController {
     public void insertDot(double x, double y) {
         String SQLcommand = "INSERT INTO dots VALUES(" + x + ", " + y + ")";
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("org.mariadb.jdbc.Driver");
             Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
             Statement statement = con.createStatement();
             statement.executeQuery(SQLcommand);

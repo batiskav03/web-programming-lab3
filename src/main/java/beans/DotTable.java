@@ -1,7 +1,6 @@
 package beans;
 
-import com.example.servlets.Dot;
-import jakarta.annotation.ManagedBean;
+import database.DataBaseController;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
@@ -14,6 +13,7 @@ import java.util.List;
 @SessionScoped
 public class DotTable implements Serializable {
     private List<Dot> list = new ArrayList<>();
+    private DataBaseController db = new DataBaseController();
     public List<Dot> getList() {
         return this.list;
     }
@@ -32,6 +32,7 @@ public class DotTable implements Serializable {
 
     public void addDot(Dot dot) {
         this.list.add(0, dot);
+        db.insertDot(dot.getX(), dot.getY());
     }
 
 }

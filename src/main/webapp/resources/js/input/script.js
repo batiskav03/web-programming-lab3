@@ -1,6 +1,7 @@
 // import modules
 let funcMath = require("./mathFunction")
 let canvasDraw = require("./canvas")
+let $ = require("jquery")
 const {currentFuncValue} = require("./mathFunction");
 
 
@@ -11,6 +12,8 @@ let rightLimit = 1400
 let bigData = [] // array with dots from server
 let inputX = document.querySelector(".xnumber")
 let inputY = document.querySelector(".ynumber")
+
+//TODO: delete this
 let submit_button = document.querySelector(".submit")
 let leftRange = document.querySelector(".xLeftlimit")
 let rightRange = document.querySelector(".xRightlimit")
@@ -52,12 +55,12 @@ rightRange.addEventListener("change", (e) => {
 
 
 
-canvasDraw.graph(document.getElementById("graph"), submitData);
+canvasDraw.graph(document.getElementById("graph"), null);
 
 function instantUpload() {
     socket.send(`${leftLimit};${rightLimit}`)
 }
-
+//TODO: delete this
 // отправка данных на сервер
 function submitData (event ,x = x_absolute,y = y_absolute) {
     if (validate_data(x,y)) {
@@ -140,7 +143,7 @@ function checkAndUpload() {
 
 }
 let intervals = checkAndUpload()
-
+//TODO: delete this
 document.querySelector(".dotsButton").addEventListener("click", (event) => {
     if (parseInt(event.target.attributes[1].value)) {
         event.target.attributes[1].value = "0"
@@ -154,10 +157,21 @@ document.querySelector(".dotsButton").addEventListener("click", (event) => {
         event.target.innerHTML = "stop uploading"
         intervals = checkAndUpload()
     }
-
-
-
 })
+
+document.getElementById("graph").onmouseup = function (event) {
+
+    let canvas = document.getElementById("graph")
+    let rect = canvas.getBoundingClientRect()
+    let x = parseInt((event.x - rect.left) * 2)
+    let y = parseInt((400 - (event.y - rect.top)) * 2 - 40)
+    document.getElementById("j_idt29:hidden-x").value = x
+    document.getElementById("j_idt29:hidden-y").value = y
+    document.getElementById("j_idt29:hidden-form").click()
+    canvasDraw.drawPoint(document.getElementById("graph"),x, y,10,10, "#E26D5A")
+}
+
+
 
 module.exports = {
     requestOnServer: requestOnServer,

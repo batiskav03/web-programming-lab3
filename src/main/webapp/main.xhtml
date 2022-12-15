@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+
+
+<h:head name="head">
+    <h:outputStylesheet name="css/stylesheet.css"/>
+
+    <title>Основная страница</title>
+</h:head>
+
+
+    <h:body>
+
+
+    <div class="header">
+        <div>
+        Калабухов Максим Александрович
+        <p>P32131</p>
+        <p>Вариант 1212 (custom)</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="graphicContainer">
+            <canvas id="graph"></canvas>
+            <p>
+                <input class="xLeftlimit" type="range" min="0" max="1400" value="0" />
+            </p>
+            <div>
+                <label class="leftLabel">Область прорисовки по X (все что левее - не прорисовываеться):</label>
+            </div>
+            <p>
+                <input class="xRightlimit" type="range" min="0" max="1400" value="1400" />
+            </p>
+            <div>
+                <label class="rightLabel">Область прорисовки по X (все что правее - не прорисовываеться):</label>
+            </div>
+        </div>
+        <div class="io-block">
+        <h:form class = "input_data">
+                <div>
+                    Выберите координату X:
+                </div>
+                <p>
+                    <h:inputText type="text" class="xnumber" id="x" value="#{requestBean.x}"/>
+                </p>
+                <div>
+                    Выберите координату Y:
+                    <p>
+                        <h:inputText type="text" class="ynumber" id="y" value="#{requestBean.y}"/>
+                    </p>
+                </div>
+                <h:commandButton value="submit" class="submit">
+                    <f:ajax execute="@form" listener="#{requestBean.getDotTableRequest}" render="table"/>
+                </h:commandButton>
+
+<!--                <button class="dotsButton" value="1">stop uploading</button>-->
+        </h:form>
+            <h:link styleClass="link" outcome="index">
+                На стартовую страницу
+            </h:link>
+        </div>
+    </div>
+
+
+    <div class="wrong_data">
+
+    </div>
+
+
+
+    <div class="clearer">
+
+    </div>
+
+
+
+    <div class="footer-block">
+        <h:dataTable styleClass="output-table" value="#{dotTable.list}" var="data" id="table" >
+            <h:column headerClass="thStyle">
+                <f:facet name="header">X</f:facet>
+                <h:outputText value="#{data.x}" styleClass="x-result"/>
+            </h:column>
+            <h:column headerClass="thStyle">
+                <f:facet name="header">Y</f:facet>
+                <h:outputText value="#{data.y}" styleClass="y-result"/>
+            </h:column>
+
+            <h:column headerClass="thStyle">
+                <f:facet name="header">Результат</f:facet>
+                <h:outputText value="#{data.result}" styleClass="hitResult"/>
+            </h:column>
+            <h:column headerClass="thStyle">
+                <f:facet name="header">Дата</f:facet>
+                <h:outputText value="#{data.date}"/>
+            </h:column>
+        </h:dataTable>
+    </div>
+
+        <h:form styleClass="hidden">
+            <h:inputText id="hidden-x" value="#{requestBean.x}" styleClass="hidden"/>
+            <h:inputText id="hidden-y" value="#{requestBean.y}" styleClass="hidden"/>
+            <h:commandButton value="Отправить" id="hidden-form" styleClass="hidden">
+                <f:ajax execute="@form" listener="#{requestBean.getDotTableRequest}" render="table"/>
+            </h:commandButton>
+        </h:form>
+
+
+        <script src="jakarta.faces.resource/js/output/main.js.xhtml" />
+    </h:body>
+
+</html>
