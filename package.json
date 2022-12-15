@@ -35,7 +35,7 @@
   },
   "jest": {
     "roots": [
-      "./src/main/webapp/js/tests"
+      "./src/main/webapp/resources/js/tests"
     ]
   }
 }

@@ -3,6 +3,7 @@ let funcMath = require("./mathFunction")
 let canvasDraw = require("./canvas")
 let $ = require("jquery")
 const {currentFuncValue} = require("./mathFunction");
+const {requestOnServer} = require("../input/requestOnServer");
 
 
 //all variables
@@ -88,20 +89,7 @@ function startAutoProcessing(dotsArray, higherFunc ,lowerFunc) {
 }
 
 
-function requestOnServer(socket ,arrData, leftLimit, rightLimit, timer) {
-    return new Promise((resolve) => {
-        if (arrData.length === 0) {
-            socket.send(`${leftLimit};${rightLimit}`)
-        } else {
-            return resolve("")
-        }
-    }).catch((err) => {
-        throw new Error(err)
-    }).then(() => {
-        timer = new Date().getTime()
-        return timer;
-    })
-}
+
 
 
 
@@ -141,7 +129,3 @@ document.getElementById("graph").onmouseup = function (event) {
 }
 
 
-module.exports = {
-    requestOnServer: requestOnServer,
-
-}
