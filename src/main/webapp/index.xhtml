@@ -54,15 +54,17 @@
             Выберите координату X:
         </div>
         <p>
-            <h:inputText type="text" class="xnumber" id="x"/>
+            <h:inputText type="text" class="xnumber" id="x" value="#{requestBean.x}"/>
         </p>
         <div>
             Выберите координату Y:
             <p>
-                <h:inputText type="text" class="ynumber" id="y"/>
+                <h:inputText type="text" class="ynumber" id="y" value="#{requestBean.y}"/>
             </p>
         </div>
-        <h:inputText type="button" value="submit" class="submit"/>
+        <h:commandButton value="submit" class="submit">
+            <f:ajax execute="@form" listener="#{requestBean.getDotTableRequest}" render="table"/>
+        </h:commandButton>
 
         <button class="dotsButton" value="1">stop uploading</button>
         </div>
@@ -79,22 +81,26 @@
 
 
 
+    <div class="footer-block">
+        <h:dataTable styleClass="output-table" value="#{dotTable.list}" var="data" id="table" >
+            <h:column headerClass="thStyle">
+                <f:facet name="header">X</f:facet>
+                <h:outputText value="#{data.x}" styleClass="x-result"/>
+            </h:column>
+            <h:column headerClass="thStyle">
+                <f:facet name="header">Y</f:facet>
+                <h:outputText value="#{data.y}" styleClass="y-result"/>
+            </h:column>
 
-
-    <div>
-        <div class="footer-block">
-        <table class='output-table'>Последние результаты:
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-                <th>Дата</th>
-                <th>Статус</th>
-    <!--            <jsp:useBean id="outputTable" class="beans.DotTable" scope="session"/>-->
-
-    <!--            <jsp:getProperty  name="outputTable" property="list"/>-->
-            </tr>
-        </table>
-        </div>
+            <h:column headerClass="thStyle">
+                <f:facet name="header">Результат</f:facet>
+                <h:outputText value="#{data.result}" styleClass="hitResult"/>
+            </h:column>
+            <h:column headerClass="thStyle">
+                <f:facet name="header">Дата</f:facet>
+                <h:outputText value="#{data.date}"/>
+            </h:column>
+        </h:dataTable>
     </div>
 
 

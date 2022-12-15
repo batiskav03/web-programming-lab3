@@ -15,11 +15,11 @@ public class DataBaseController {
     public String getDots(int count, int leftLimit, int rightLimit) {
         ArrayList<int[]> list = new ArrayList<>();
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("org.mariadb.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        String SQLcommand = "SELECT * FROM dots \n" +
+        String SQLcommand = "SELECT * FROM public.dots \n" +
                 "            WHERE y <= sin(x/120)*20 + 600 AND y >= sin(x/100)*50 + 200 AND x >= " + leftLimit + " AND x <= " + rightLimit + "\n" +
                 "            LIMIT 250 OFFSET " + count * 250;
 

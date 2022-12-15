@@ -36,6 +36,5 @@
     "roots": [
       "./src/main/webapp/js/tests"
     ]
-  },
-  "devDependencies": {}
+  }
 }

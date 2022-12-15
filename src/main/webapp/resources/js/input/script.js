@@ -84,6 +84,7 @@ function validate_data(x,y){
 function startAutoProcessing(dotsArray, higherFunc ,lowerFunc) {
     setInterval(() => {
         try {
+
             x = Number(bigData[0][0])
             y = Number(bigData[0][1])
             bigData.splice([0], 1)
