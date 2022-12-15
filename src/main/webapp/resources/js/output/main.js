@@ -11110,6 +11110,8 @@ function graphExt() {
     return [max,min]
 }
 
+
+
 module.exports = {
     graph: graph,
     drawPoint: drawPoint,
@@ -11178,8 +11180,7 @@ let bigData = [] // array with dots from server
 let inputX = document.querySelector(".xnumber")
 let inputY = document.querySelector(".ynumber")
 
-//TODO: delete this
-let submit_button = document.querySelector(".submit")
+
 let leftRange = document.querySelector(".xLeftlimit")
 let rightRange = document.querySelector(".xRightlimit")
 const lowerFunc = funcMath.makeMathFunc((x) => Math.sin(x)*50 + 200)
@@ -11203,7 +11204,7 @@ socket.onmessage = function (event) {
 // all listeners
 inputX.addEventListener("input", (elem) => {x_absolute = elem.target.value})
 inputY.addEventListener("input", (elem) => {y_absolute = elem.target.value})
-submit_button.addEventListener("click",submitData)
+
 leftRange.addEventListener("change",(e) => {
     leftLimit = e.target.value
     document.querySelector(".leftLabel").innerHTML = "Область прорисовки по X:   " + leftLimit
@@ -11225,22 +11226,7 @@ canvasDraw.graph(document.getElementById("graph"), null);
 function instantUpload() {
     socket.send(`${leftLimit};${rightLimit}`)
 }
-//TODO: delete this
-// отправка данных на сервер
-function submitData (event ,x = x_absolute,y = y_absolute) {
-    if (validate_data(x,y)) {
-        fetch("check-servlet?" + "x_absolute=" + x + "&y_absolute=" + y + "&request_type=get_from_DB")
-            .then(response => response.text())
-            .then(responseText => {
-                document.querySelector(".output-table").innerHTML = responseText
-                canvasDraw.drawPoint(document.getElementById("graph"), x, y,10,10, "#E26D5A")
-                fetch("check-servlet?" + "x_absolute=" + x + "&y_absolute=" + y + "&request_type=write_into_DB")
-            })
-    } else {
-        document.querySelector(".wrong_data").innerHTML = "Данные введены некоректно"
-        setTimeout(() =>{document.querySelector(".wrong_data").innerHTML = ""} ,5000)
-    }
-}
+
 
 // проверка правильности введенных данных:
 function validate_data(x,y){
@@ -11269,7 +11255,7 @@ function startAutoProcessing(dotsArray, higherFunc ,lowerFunc) {
 }
 
 
-function requestOnServer(arrData, leftLimit, rightLimit, timer) {
+function requestOnServer(socket ,arrData, leftLimit, rightLimit, timer) {
     return new Promise((resolve) => {
         if (arrData.length === 0) {
             socket.send(`${leftLimit};${rightLimit}`)
@@ -11290,7 +11276,7 @@ function requestOnServer(arrData, leftLimit, rightLimit, timer) {
 function checkAndUpload() {
     let time = new Date().getTime()
     let interval = setInterval( () => {
-        requestOnServer(bigData, leftLimit, rightLimit, time).then((data) => time = data)
+        requestOnServer(socket,bigData, leftLimit, rightLimit, time).then((data) => time = data)
     },100)
     let timeInterval = setInterval( () => {
         if (new Date().getTime() - time >  3000) {
@@ -11308,21 +11294,6 @@ function checkAndUpload() {
 
 }
 let intervals = checkAndUpload()
-//TODO: delete this
-document.querySelector(".dotsButton").addEventListener("click", (event) => {
-    if (parseInt(event.target.attributes[1].value)) {
-        event.target.attributes[1].value = "0"
-        event.target.innerHTML = "run uploading"
-        clearInterval(intervals.interval)
-        clearInterval(intervals.timeInterval)
-        $(".dotsButton").css("background-color", "#E26D5A")
-    } else {
-        $(".dotsButton").css("background-color", "#9297C4")
-        event.target.attributes[1].value = "1"
-        event.target.innerHTML = "stop uploading"
-        intervals = checkAndUpload()
-    }
-})
 
 document.getElementById("graph").onmouseup = function (event) {
 
@@ -11335,7 +11306,6 @@ document.getElementById("graph").onmouseup = function (event) {
     document.getElementById("j_idt29:hidden-form").click()
     canvasDraw.drawPoint(document.getElementById("graph"),x, y,10,10, "#E26D5A")
 }
-
 
 
 module.exports = {

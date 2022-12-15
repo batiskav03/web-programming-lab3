@@ -113,6 +113,8 @@ function graphExt() {
     return [max,min]
 }
 
+
+
 module.exports = {
     graph: graph,
     drawPoint: drawPoint,
