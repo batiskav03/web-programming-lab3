@@ -81,7 +81,11 @@ function graph(canvas,cb) {
     canvas.addEventListener('click', createDot)
     function createDot(event) {
         let rect = canvas.getBoundingClientRect()
-        cb(null , parseInt((event.x - rect.left) * 2), parseInt((HEIGHT - (event.y - rect.top)) * 2 - PADDING))
+        try {
+            cb(null , parseInt((event.x - rect.left) * 2), parseInt((HEIGHT - (event.y - rect.top)) * 2 - PADDING))
+        } catch (exp) {
+            console.log(exp);
+        }
     }
     makeOrdinateValues(ctx)
     makeAbscissaValues(ctx)

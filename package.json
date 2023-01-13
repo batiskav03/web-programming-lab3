@@ -37,5 +37,8 @@
     "roots": [
       "./src/main/webapp/resources/js/tests"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^12.3.0"
   }
 }
