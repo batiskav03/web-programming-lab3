@@ -4,12 +4,22 @@ import com.google.gson.Gson;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class DataBaseController {
-    private static String PASSWORD = "3361";
-    private static String USER = "root";
-    private static String URL = "jdbc:mariadb://localhost:3306/public";
+    private static String PASSWORD;
+    private static String USER;
+    private static String URL;
+
+
+    public DataBaseController() {
+        PASSWORD = System.getenv("MARIADB_JDBC_PASSWORD");
+        USER = System.getenv("MARIADB_JDBC_USER");
+        URL = System.getenv("MARIADB_JDBC_URL");
+    }
+
 
 
     public String getDots(int count, int leftLimit, int rightLimit) {
@@ -42,6 +52,7 @@ public class DataBaseController {
     }
 
     public void insertDot(double x, double y) {
+
         String SQLcommand = "INSERT INTO dots VALUES(" + x + ", " + y + ")";
         try {
             Class.forName("org.mariadb.jdbc.Driver");
