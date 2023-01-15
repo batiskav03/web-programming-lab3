@@ -1,7 +1,7 @@
 const {requestOnServer} = require("../input/requestOnServer");
 
 
-describe("requestOnServer", () => {
+describe("Test function requestOnServer", () => {
     let bigData;
     let socket;
     beforeEach(() => {
@@ -17,13 +17,13 @@ describe("requestOnServer", () => {
             },
         }
     })
-    test("should call socket.send", () => {
+    test("Test function should call socket.send", () => {
         const socket = {send: jest.fn()}
         requestOnServer(socket,[],1,1, new Date())
         expect(socket.send.call.length).toBe(1);
     })
 
-    test("array should stay Truthy", () => {
+    test("Test function array should stay Truthy", () => {
         requestOnServer(socket,bigData, 1, 1400, new Date())
         expect(bigData).toBeTruthy()
 

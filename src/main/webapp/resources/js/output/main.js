@@ -11078,7 +11078,12 @@ function graph(canvas,cb) {
     canvas.addEventListener('click', createDot)
     function createDot(event) {
         let rect = canvas.getBoundingClientRect()
-        cb(null , parseInt((event.x - rect.left) * 2), parseInt((HEIGHT - (event.y - rect.top)) * 2 - PADDING))
+        try {
+            cb(null , parseInt((event.x - rect.left) * 2), parseInt((HEIGHT - (event.y - rect.top)) * 2 - PADDING))
+        } catch (exp) {
+            console.log(exp);
+        }
+
     }
     makeOrdinateValues(ctx)
     makeAbscissaValues(ctx)
@@ -11165,11 +11170,30 @@ module.exports = {
     currentFuncValue: currentFuncValue
 }
 },{}],4:[function(require,module,exports){
+function requestOnServer(socket ,arrData, leftLimit, rightLimit, timer) {
+    return new Promise((resolve) => {
+        if (arrData.length === 0) {
+            socket.send(`${leftLimit};${rightLimit}`)
+        } else {
+            return resolve("")
+        }
+    }).catch((err) => {
+        throw new Error(err)
+    }).then(() => {
+        timer = new Date().getTime()
+        return timer;
+    })
+}
+module.exports = {
+    requestOnServer: requestOnServer,
+}
+},{}],5:[function(require,module,exports){
 // import modules
 let funcMath = require("./mathFunction")
 let canvasDraw = require("./canvas")
 let $ = require("jquery")
 const {currentFuncValue} = require("./mathFunction");
+const {requestOnServer} = require("../input/requestOnServer");
 
 
 //all variables
@@ -11238,7 +11262,6 @@ function validate_data(x,y){
 function startAutoProcessing(dotsArray, higherFunc ,lowerFunc) {
     setInterval(() => {
         try {
-
             x = Number(bigData[0][0])
             y = Number(bigData[0][1])
             bigData.splice([0], 1)
@@ -11255,20 +11278,7 @@ function startAutoProcessing(dotsArray, higherFunc ,lowerFunc) {
 }
 
 
-function requestOnServer(socket ,arrData, leftLimit, rightLimit, timer) {
-    return new Promise((resolve) => {
-        if (arrData.length === 0) {
-            socket.send(`${leftLimit};${rightLimit}`)
-        } else {
-            return resolve("")
-        }
-    }).catch((err) => {
-        throw new Error(err)
-    }).then(() => {
-        timer = new Date().getTime()
-        return timer;
-    })
-}
+
 
 
 
@@ -11308,8 +11318,5 @@ document.getElementById("graph").onmouseup = function (event) {
 }
 
 
-module.exports = {
-    requestOnServer: requestOnServer,
 
-}
-},{"./canvas":2,"./mathFunction":3,"jquery":1}]},{},[4]);
+},{"../input/requestOnServer":4,"./canvas":2,"./mathFunction":3,"jquery":1}]},{},[5]);
